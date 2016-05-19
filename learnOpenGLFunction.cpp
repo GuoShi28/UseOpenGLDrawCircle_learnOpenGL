@@ -95,12 +95,24 @@ void drawSphereUsePoints::displayFunc()
 ////
 void drawCubicSphere::init()
 {
-	lightPosition = { 10.0, 10.0, 10.0, 0.0 };
-	whiteLight = { 0.8, 0.8, 0.8, 1.0 };
-	matSpecular = { 0.3, 0.3, 0.3, 1.0 };
-	matShininess = { 20.0 };
-	matEmission = { 0.3, 0.3, 0.3, 1.0 };
-	spin = 0;
+	m_lightPosition[0] = 10.0;
+	m_lightPosition[1] = 10.0;
+	m_lightPosition[2] = 10.0;
+	m_lightPosition[3] = 0.0;
+	m_whiteLight[0] = 0.8;
+	m_whiteLight[1] = 0.8;
+	m_whiteLight[2] = 0.8;
+	m_whiteLight[3] = 1.0;
+	m_matSpecular[0] = 0.3;
+	m_matSpecular[1] = 0.3;
+	m_matSpecular[2] = 0.3;
+	m_matSpecular[3] = 1.0;
+	m_matShininess[0] = 20.0;
+	m_matEmission[0] = 0.3;
+	m_matEmission[1] = 0.3;
+	m_matEmission[2] = 0.3;
+	m_matEmission[3] = 1.0;
+	m_spin = 0;
 	
 	glClearColor(0.3, 0.3, 0.3, 1.0);
 	glClearDepth(1.0);
@@ -110,7 +122,70 @@ void drawCubicSphere::init()
 	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
+	glLightfv(GL_LIGHT0, GL_POSITION, m_lightPosition);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, m_whiteLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, m_whiteLight);
 }
 
+void drawCubicSphere::display()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BITS);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-10, 10, -10, 10, -10, 10);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glRotatef(m_spin, 0.0, 1.0, 0.0);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, m_matSpecular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, m_matShininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, m_matEmission);
+	glutSolidSphere(3.0, 16, 16);
+	glPopMatrix();
+	glFlush();
+}
+
+void drawCubicSphere::reshape(int w, int h)
+{
+	glViewport(0.0, 0.0, (GLsizei)w, (GLsizei)h);
+}
+
+void drawCubicSphere::keyboardfunc(unsigned char key, int x, int y)
+{
+	switch (key)
+	{
+	case 'a':
+		m_spin += 30;
+		break;
+	case 'b':
+		m_spin -= 30;
+		break;
+	}
+	if (m_spin < 360) m_spin += 360;
+	else if (m_spin >= 360) m_spin -= 360;
+	glutPostRedisplay();
+}
+
+void drawCubicSphere::mousefunc(int button, int state, int x, int y)
+{
+	if (state == GLUT_DOWN)
+	{
+		switch (button)
+		{
+		case GLUT_LEFT_BUTTON:
+			m_matEmission[0] += 1.0;
+			if (m_matEmission[0] > 1.0)	m_matEmission[0] -= 1.1;
+			break;
+		case GLUT_MIDDLE_BUTTON:
+			m_matEmission[1] += 1.0;
+			if (m_matEmission[1] > 1.0)	m_matEmission[1] -= 1.1;
+			break;
+		case GLUT_RIGHT_BUTTON:
+			m_matEmission[2] += 1.0;
+			if (m_matEmission[2] > 1.0)	m_matEmission[2] -= 1.1;
+			break;	
+		}
+		glutPostRedisplay();
+	}
+}
 
