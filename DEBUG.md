@@ -1,4 +1,6 @@
-2016/05/21 :
+record every bug i think worth to write
+
+1.2016/05/21 :
 
 Bug:Using OpenGL glutDisplayFunc within class
 
