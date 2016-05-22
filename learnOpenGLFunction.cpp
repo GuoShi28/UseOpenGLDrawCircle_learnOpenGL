@@ -1,5 +1,5 @@
 #include "learnOpenGLFunction.h"
-
+//使用点球体
 drawSphereUsePoints* currentInstance;
 
 void displayCallBack()
@@ -103,7 +103,7 @@ void drawSphereUsePoints::displayFunc()
 }
 
 
-////
+////画球体
 drawCubicSphere* instanceCubic;
 
 void drawCubicSphereDisplayCallBack()
@@ -156,7 +156,7 @@ void drawCubicSphere::init()
 	m_lightPosition[0] = 10.0;
 	m_lightPosition[1] = 10.0;
 	m_lightPosition[2] = 10.0;
-	m_lightPosition[3] = 0.0;
+	m_lightPosition[3] = 1.0;	//x,y,z,w,w越大光线越弱
 	m_whiteLight[0] = 0.8;
 	m_whiteLight[1] = 0.8;
 	m_whiteLight[2] = 0.8;
@@ -165,7 +165,7 @@ void drawCubicSphere::init()
 	m_matSpecular[1] = 0.3;
 	m_matSpecular[2] = 0.3;
 	m_matSpecular[3] = 1.0;
-	m_matShininess[0] = 0.2;//20.0;
+	m_matShininess[0] = 20.0;
 	m_matEmission[0] = 0.3;
 	m_matEmission[1] = 0.3;
 	m_matEmission[2] = 0.3;
@@ -189,7 +189,7 @@ void drawCubicSphere::init()
 
 void drawCubicSphere::display()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BITS);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(-10, 10, -10, 10, -10, 10);
@@ -226,7 +226,7 @@ void drawCubicSphere::keyboardfunc(unsigned char key, int x, int y)
 		break;
 	}
 	if (m_spin < 360) m_spin += 360;
-	else if (m_spin >= 360) m_spin -= 360;
+	else if (m_spin >= 360) m_spin -= 360;	//只是将角度控制在360度以内，注释掉也可
 	glutPostRedisplay();
 }
 
