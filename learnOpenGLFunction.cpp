@@ -1,6 +1,17 @@
 #include "learnOpenGLFunction.h"
 
+drawSphereUsePoints* currentInstance;
 
+void displayCallBack()
+{
+	currentInstance->displayFunc();
+}
+
+void drawSphereUsePoints::setupDrawBack()
+{
+	currentInstance = this;
+	::glutDisplayFunc(displayCallBack);
+}
 void drawSphereUsePoints::drawPoints()
 {
 	double u_step = 1 / (double)STEP_NUM;
@@ -87,12 +98,59 @@ void drawSphereUsePoints::displayFunc()
 	glRotated(30, 1, 0, 0);
 	glRotated(60, 0, 1, 0);
 	glRotated(90, 0, 0, 1);
-	drawSphereUsePoints();
+	drawPoints();
 	glutSwapBuffers();
 }
 
 
 ////
+drawCubicSphere* instanceCubic;
+
+void drawCubicSphereDisplayCallBack()
+{
+	instanceCubic->display();
+}
+
+void drawCubicSphere::SetUpDisplay()
+{
+	instanceCubic = this;
+	::glutDisplayFunc(drawCubicSphereDisplayCallBack);
+}
+
+void drawCubicSphereReshapeCallBack(int width,int height)
+{
+	instanceCubic->reshape(width,height);
+}
+
+void drawCubicSphere::SetUpReshape()
+{
+	instanceCubic = this;
+	::glutReshapeFunc(drawCubicSphereReshapeCallBack);
+}
+
+void drawCubicSphereKeyboardCallBack(unsigned char key, int x, int y)
+{
+	instanceCubic->keyboardfunc(key,x,y);
+}
+
+void drawCubicSphere::SetUpKeyBoardFunc()
+{
+	instanceCubic = this;
+	::glutKeyboardFunc(drawCubicSphereKeyboardCallBack);
+}
+
+void drawCubicSphereMouseCallBack(int button, int state, int x, int y)
+{
+	instanceCubic->mousefunc(button,state,x,y);
+}
+
+void drawCubicSphere::SetUpMouseFunc()
+{
+	instanceCubic = this;
+	::glutMouseFunc(drawCubicSphereMouseCallBack);
+}
+
+
 void drawCubicSphere::init()
 {
 	m_lightPosition[0] = 10.0;
@@ -107,7 +165,7 @@ void drawCubicSphere::init()
 	m_matSpecular[1] = 0.3;
 	m_matSpecular[2] = 0.3;
 	m_matSpecular[3] = 1.0;
-	m_matShininess[0] = 20.0;
+	m_matShininess[0] = 0.2;//20.0;
 	m_matEmission[0] = 0.3;
 	m_matEmission[1] = 0.3;
 	m_matEmission[2] = 0.3;
@@ -116,7 +174,8 @@ void drawCubicSphere::init()
 	
 	glClearColor(0.3, 0.3, 0.3, 1.0);
 	glClearDepth(1.0);
-	glShadeModel(GL_SMOOTH);
+	//glShadeModel(GL_SMOOTH);
+	glShadeModel(GL_FLAT);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
@@ -124,6 +183,7 @@ void drawCubicSphere::init()
 	glLoadIdentity();
 	glLightfv(GL_LIGHT0, GL_POSITION, m_lightPosition);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, m_whiteLight);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, m_whiteLight);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, m_whiteLight);
 }
 
@@ -135,6 +195,9 @@ void drawCubicSphere::display()
 	glOrtho(-10, 10, -10, 10, -10, 10);
 
 	glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
+	//gluLookAt(0.0, 5.0, -10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
 	glPushMatrix();
 	glRotatef(m_spin, 0.0, 1.0, 0.0);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, m_matSpecular);
@@ -142,7 +205,8 @@ void drawCubicSphere::display()
 	glMaterialfv(GL_FRONT, GL_EMISSION, m_matEmission);
 	glutSolidSphere(3.0, 16, 16);
 	glPopMatrix();
-	glFlush();
+	//glFlush();
+	glutSwapBuffers();
 }
 
 void drawCubicSphere::reshape(int w, int h)
