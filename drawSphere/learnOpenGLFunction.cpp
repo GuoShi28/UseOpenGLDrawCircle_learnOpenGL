@@ -1,5 +1,5 @@
 #include "learnOpenGLFunction.h"
-//Ê¹ÓÃµãÇòÌå
+//ä½¿ç”¨ç‚¹çƒä½“
 drawSphereUsePoints* currentInstance;
 
 void displayCallBack()
@@ -68,12 +68,12 @@ void drawSphereUsePoints::init()
 {
 	glClearColor(0, 1, 1, 1);
 	glClearDepth(1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //½«glClearColorÓëglClearDepthÉèÖÃµÄÖµ£¬Ïû³ıµ½Õû¸ö´°¿ÚÉÏ
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //å°†glClearColorä¸glClearDepthè®¾ç½®çš„å€¼ï¼Œæ¶ˆé™¤åˆ°æ•´ä¸ªçª—å£ä¸Š
 
-	GLfloat light_position[] = { 1.0f, 1.0f, 1.0f, 1.0f };//Q4:¸Ä±äÊıÖµ£¬¶Ô½á¹ûÓ°Ïì£¿
-	GLfloat light_ambient[] = { 0.2f, 0.2f, 0.2f, 0.2f };//»·¾³¹â£¬Q5:¸Ä±ä»·¾³¹â¶Ô½á¹ûµÄÓ°Ïì£¿
-	GLfloat light_diffuse[] = { 0.5f, 0.5f, 0.5f, 0.2f };//Âş·´Éä¹â£¬Q6:¸Ä±äÊıÖµ¶Ô½á¹ûµÄÓ°Ïì£¿
-	GLfloat light_specular[] = { 0.5f, 0.5f, 0.5f, 0.2f }; //¾µÃæ·´Éä£¬Q7:¸Ä±äÊıÖµ¶Ô½á¹ûµÄÓ°Ïì£¿
+	GLfloat light_position[] = { 1.0f, 1.0f, 1.0f, 1.0f };//Q4:æ”¹å˜æ•°å€¼ï¼Œå¯¹ç»“æœå½±å“ï¼Ÿ
+	GLfloat light_ambient[] = { 0.2f, 0.2f, 0.2f, 0.2f };//ç¯å¢ƒå…‰ï¼ŒQ5:æ”¹å˜ç¯å¢ƒå…‰å¯¹ç»“æœçš„å½±å“ï¼Ÿ
+	GLfloat light_diffuse[] = { 0.5f, 0.5f, 0.5f, 0.2f };//æ¼«åå°„å…‰ï¼ŒQ6:æ”¹å˜æ•°å€¼å¯¹ç»“æœçš„å½±å“ï¼Ÿ
+	GLfloat light_specular[] = { 0.5f, 0.5f, 0.5f, 0.2f }; //é•œé¢åå°„ï¼ŒQ7:æ”¹å˜æ•°å€¼å¯¹ç»“æœçš„å½±å“ï¼Ÿ
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
@@ -82,16 +82,16 @@ void drawSphereUsePoints::init()
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	glEnable(GL_AUTO_NORMAL);//Í¼Ïñ¿ÉÒÔ½«¹â·´Éäµ½¸÷¸ö·½Ïò
-	glEnable(GL_NORMALIZE);//¸ù¾İº¯ÊıglNormalµÄÉèÖÃÌõ¼ş£¬ÆôÓÃ·¨ÏòÁ¿
+	glEnable(GL_AUTO_NORMAL);//å›¾åƒå¯ä»¥å°†å…‰åå°„åˆ°å„ä¸ªæ–¹å‘
+	glEnable(GL_NORMALIZE);//æ ¹æ®å‡½æ•°glNormalçš„è®¾ç½®æ¡ä»¶ï¼Œå¯ç”¨æ³•å‘é‡
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);//Éî¶È»º³å±È½ÏÖµ
+	glDepthFunc(GL_LESS);//æ·±åº¦ç¼“å†²æ¯”è¾ƒå€¼
 }
 
 void drawSphereUsePoints::displayFunc()
 {
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();	//»Ø¸´Ä¬ÈÏÎª³õÊ¼¾ØÕó
+	glLoadIdentity();	//å›å¤é»˜è®¤ä¸ºåˆå§‹çŸ©é˜µ
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glColor3f(1.0, 0.0, 0.0);
 	glPointSize(1.0);
@@ -103,7 +103,7 @@ void drawSphereUsePoints::displayFunc()
 }
 
 
-////»­ÇòÌå
+////ç”»çƒä½“
 drawCubicSphere* instanceCubic;
 
 void drawCubicSphereDisplayCallBack()
@@ -156,7 +156,7 @@ void drawCubicSphere::init()
 	m_lightPosition[0] = 10.0;
 	m_lightPosition[1] = 10.0;
 	m_lightPosition[2] = 10.0;
-	m_lightPosition[3] = 1.0;	//x,y,z,w,wÔ½´ó¹âÏßÔ½Èõ
+	m_lightPosition[3] = 1.0;	//x,y,z,w,wè¶Šå¤§å…‰çº¿è¶Šå¼±
 	m_whiteLight[0] = 0.8;
 	m_whiteLight[1] = 0.8;
 	m_whiteLight[2] = 0.8;
@@ -226,7 +226,7 @@ void drawCubicSphere::keyboardfunc(unsigned char key, int x, int y)
 		break;
 	}
 	if (m_spin < 360) m_spin += 360;
-	else if (m_spin >= 360) m_spin -= 360;	//Ö»ÊÇ½«½Ç¶È¿ØÖÆÔÚ360¶ÈÒÔÄÚ£¬×¢ÊÍµôÒ²¿É
+	else if (m_spin >= 360) m_spin -= 360;	//åªæ˜¯å°†è§’åº¦æ§åˆ¶åœ¨360åº¦ä»¥å†…ï¼Œæ³¨é‡Šæ‰ä¹Ÿå¯
 	glutPostRedisplay();
 }
 
