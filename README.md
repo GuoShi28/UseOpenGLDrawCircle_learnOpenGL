@@ -16,3 +16,9 @@ use glutSolidSphere function to draw sphere
 use "a","b" to rotate sphere around Y
 
 use mouse to change the color of sphere 
+
+3.learn to use texture
+
+reference:http://zhidao.baidu.com/question/554950050.html
+
+just start
