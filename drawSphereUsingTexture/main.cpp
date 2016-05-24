@@ -22,8 +22,9 @@ void makeStripeImage(void)
 	{
 		stripeImage[4 * j] = (GLubyte)((j <= 4) ? 255 : 0);
 		stripeImage[4 * j + 1] = (GLubyte)((j > 4) ? 255 : 0);	//why use this judge?
+																//A:want the texture line become wider on the top of sphere.
 		stripeImage[4 * j + 2] = (GLubyte)0;
-		stripeImage[4 * j + 3] = (GLubyte)255;
+		stripeImage[4 * j + 3] = (GLubyte)255;		//use and color function?
 	}
 }
 
@@ -42,13 +43,13 @@ void init(void)
 	glShadeModel(GL_SMOOTH);
 	
 	makeStripeImage();
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);	//use?
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);	//unpack 内存到GPU pack GPU到内存
 
 #ifdef GL_VERSION_1_1
 	glGenTextures(1, &texName);
 	glBindTexture(GL_TEXTURE_1D, texName);	//why not 2D
 #endif
-	glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);	//use?
+	glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_T, GL_REPEAT);	//use?
 	glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	//use?
 	glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	//use?
 #ifdef GL_VERSION_1_1
@@ -82,12 +83,13 @@ void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
-	glRotatef(roangles, 0.0, 0.0, 1.0);
+	glRotatef(roangles, 0.0, 1.0, 0.0);
 #ifdef GL_VERSION_1_1
 	glBindTexture(GL_TEXTURE_1D, texName);
 #endif
 	//glutSolidTeapot(2.0);
-	glutSolidSphere(2.0, 32, 32);
+	glutSolidSphere(3.5, 32, 32);	//why 2.0->4.0 there's a dark circle in the center
+									//A:the viewport set 3.5, when the radii == 4 > 3.5, we can't see all sphere.
 	glPopMatrix();
 	glFlush();
 }
@@ -113,7 +115,7 @@ void reshape(int w, int h)
 
 void idle()
 {
-	roangles += 0.1f;
+	roangles += 0.01f;
 	glutPostRedisplay();
 }
 
