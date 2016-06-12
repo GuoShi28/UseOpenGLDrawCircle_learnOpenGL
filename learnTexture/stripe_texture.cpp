@@ -43,7 +43,7 @@ void init(void)
 	glShadeModel(GL_SMOOTH);
 	
 	makeStripeImage();
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);	//unpack �ڴ浽GPU pack GPU���ڴ�
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);	//unpack ÄÚ´æµ½GPU pack GPUµ½ÄÚ´æ
 
 #ifdef GL_VERSION_1_1
 	glGenTextures(1, &texName);
